@@ -32,6 +32,19 @@
 $ npm install
 ```
 
+For MacOS:
+brew tap mongodb/brew
+brew install mongodb-community
+brew services start mongodb/brew/mongodb-community
+
+For Linux:
+sudo apt-get install -y mongodb
+sudo systemctl start mongodb
+
+## Add to env
+
+MONGODB_URI=mongodb://localhost:27017/my-database
+
 ## Compile and run the project
 
 ```bash

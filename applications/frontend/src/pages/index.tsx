@@ -1,23 +1,26 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import "../app/globals.css";
 
 export default function Home() {
   const [users, setUsers] = useState<{ name: string }[]>([]);
 
   useEffect(() => {
     // Call the API route from the NestJS backend
-    axios.get('http://localhost:3000/user')
-      .then(response => {
+    axios
+      .get("http://localhost:3000/user")
+      .then((response) => {
         setUsers(response.data);
       })
-      .catch(error => {
-        console.error('Error fetching data: ', error);
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
       });
   }, []);
 
   return (
     <div>
-      <h1>Users</h1>
+      <div className="bg-blue-500 text-white p-4">Hello Tailwind!</div>
+
       <ul>
         {users.map((user, index) => (
           <li key={index}>{user.name}</li>
@@ -26,4 +29,3 @@ export default function Home() {
     </div>
   );
 }
-

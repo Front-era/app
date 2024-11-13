@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserController } from './user/user.controller';
@@ -13,13 +14,19 @@ import { SubmissionModule } from './submission/submission.module';
 import { MatchSuggestionModule } from './matchsuggestion/matchsuggestion.module';
 import { ProgramModule } from './program/program.module';
 import { ColonyModule } from './colony/colony.module';
-import * as dotenv from 'dotenv';
-
-dotenv.config();
 
 @Module({
   imports: [
-    MongooseModule.forRoot(process.env.MONGODB_URI),
+    ConfigModule.forRoot({
+      isGlobal: true, // This makes ConfigModule available globally
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGODB_URI'), // Use ConfigService to get the MongoDB URI
+      }),
+      inject: [ConfigService],
+    }),
     EmailModule,
     UserModule,
     ProjectModule,
@@ -29,7 +36,7 @@ dotenv.config();
     SubmissionModule,
     MatchSuggestionModule,
     ProgramModule,
-    ColonyModule, // Connect to MongoDB
+    ColonyModule,
   ],
   controllers: [AppController, UserController],
   providers: [AppService],

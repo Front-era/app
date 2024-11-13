@@ -41,7 +41,12 @@ For Linux:
 sudo apt-get install -y mongodb
 sudo systemctl start mongodb
 
-## Add to env
+## Run commands in backend folder
+
+npm install @nestjs/common @nestjs/mongoose mongoose dotenv
+npm install --save-dev @types/mongoose @types/node
+
+## Add to env[under backend]
 
 MONGODB_URI=mongodb://localhost:27017/my-database
 

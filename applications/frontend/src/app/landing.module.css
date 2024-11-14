@@ -1,0 +1,199 @@
+
+.backgroundContainerOuter {
+    position: absolute;
+    width: 100vw;
+    height: 250vw;
+    overflow: hidden;
+}
+
+.backgroundContainerInner {
+    position: relative;
+    width: 100vw;
+    height: 100vmin;
+    top: 0;
+    overflow: hidden;
+}
+
+.gradient {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    /* background: linear-gradient(
+        0deg, 
+        rgba(0,0,0,1) calc((50vh - 50vmin) / 100vh),
+        rgba(0,0,0,0) calc((55vh - 50vmin) / 100vh),
+        rgba(0,0,0,0) calc((45vh + 50vmin) / 100vh),
+        rgba(0,0,0,1) calc((50vh + 50vmin) / 100vh)
+    ); */
+
+}
+
+.backgroundCenter {
+    position: fixed;
+    width: 100vw;
+    height: 100vmin;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.backgroundPlanet {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+.surfaceContainer {
+    position: sticky;
+    top: 0;
+}
+
+.planetHorizon {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+}
+
+.surfaceHorizon {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    text-shadow: 0px 7px 2px #000000dd;
+    mix-blend-mode: soft-light;
+}
+
+.backgroundSurface {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+}
+
+.rocket {
+    position: absolute;
+}
+
+@keyframes containerScroll {
+    0% {
+        top: 0;
+    }
+
+    100% {
+        top: -50%;
+    }
+}
+
+@keyframes pHorizonScroll {
+    0% {
+        opacity: 100%;
+        top: 0;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        top: -25%;
+    }
+}
+
+@keyframes sHorizonScroll {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 100%;
+        top: 20%;
+    }
+
+    100% {
+        opacity: 100%;
+        top: 20%;
+    }
+}
+
+@keyframes planetScroll {
+    0% {
+        opacity: 100%;
+        top: 0;
+    }
+
+    50% {
+        opacity: 0;
+        top: -10%;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes surfaceScroll {
+    0% {
+        opacity: 0;
+        top: 0;
+    }
+
+    50% {
+        opacity: 100%;
+        top: 0;
+    }
+
+    100% {
+        opacity: 100%;
+        top: 0;
+    }
+}
+
+@keyframes rocketScroll {
+    0% {
+        top: 30%;
+    }
+
+    50% {
+        top: 20%;
+    }
+
+    100% {
+        top: 20%;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+        .backgroundPlanet {
+            animation: planetScroll linear both;
+            animation-timeline: scroll();
+        }
+
+        .backgroundSurface {
+            animation: surfaceScroll linear both;
+            animation-timeline: scroll();
+        }
+
+        .rocket {
+            animation: rocketScroll linear both;
+            animation-timeline: scroll();
+        }
+
+        .planetHorizon {
+            animation: pHorizonScroll linear both;
+            animation-timeline: scroll();
+        }
+
+        .surfaceHorizon {
+            animation: sHorizonScroll linear both;
+            animation-timeline: scroll();
+        }
+    }
+}

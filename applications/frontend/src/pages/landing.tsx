@@ -100,7 +100,6 @@ export default function Landing() {
           </div>
         </div>
       </div>
-      <div id="gradient" className={styles.gradient}></div>
     </div>
   );
 }

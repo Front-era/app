@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "../app/globals.css";
+import Landing from "./landing";
 
 export default function Home() {
+  return (<Landing/>)
+
   const [users, setUsers] = useState<{ name: string }[]>([]);
 
   useEffect(() => {

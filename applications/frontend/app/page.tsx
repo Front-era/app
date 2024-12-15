@@ -184,7 +184,7 @@ export default function Landing() {
               >
                 {/* Instagram Icon */}
                 <a
-                  href="https://fronter.me/Frontera"
+                  href="https://www.instagram.com/frontera.official/?utm_source=ig_web_button_share_sheet"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`absolute w-[60%] transform -translate-x-[120%] translate-y-[-45%] ${

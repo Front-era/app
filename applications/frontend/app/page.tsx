@@ -8,6 +8,8 @@ import Rocket from "../assets/rocket.png";
 import Instagram from "../assets/instagram.png";
 import axios from "axios";
 
+const currentYear = new Date().getFullYear();
+
 export default function Landing() {
   // handle the parallax effect for landing
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -29,6 +31,8 @@ export default function Landing() {
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [state, setState] = useState("");
+  const [yearOfBirth, setYearOfBirth] = useState("");
   const [population, setPopulation] = useState(0); // State for email count
 
   const validateEmail = (email: string): boolean => {
@@ -62,6 +66,16 @@ export default function Landing() {
       return;
     }
 
+    if(!yearOfBirth){
+      alert("Please select your year of birth");
+      return;
+    }
+
+    if(!state){
+      alert("Please select the state you're from")
+      return;
+    }
+
     setShowModal(false);
     setEmail(""); // Clear email after submission
     setError(""); // Clear error
@@ -70,6 +84,8 @@ export default function Landing() {
     try {
       const response = await axios.post("http://localhost:3000/emails", {
         email,
+        yearOfBirth,
+        state,
       });
 
       if (response.status === 201) {
@@ -282,35 +298,75 @@ export default function Landing() {
       </div>
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-white p-6  shadow-md relative">
-            <h2 className="text-lg font-semibold text-gray-700 mb-4">
-              Enter your Email
-            </h2>
-            <input
-              type="email"
-              placeholder="frontera@offical.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onKeyDown={(event) => event.key === "Enter" && handleSubmit()}
-              className="border border-gray-300 p-2 rounded w-64 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            />
-            <div className="mt-4 flex justify-end gap-2">
-              <button
-                onClick={() => setShowModal(false)}
-                className="py-2 px-4 bg-gray-400 rounded hover:bg-red-300 transition"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSubmit}
-                className="py-2 px-4 bg-blue-900 text-white rounded hover:bg-blue-500 transition"
-              >
-                Submit
-              </button>
-            </div>
-          </div>
-        </div>
+   <div className="fixed inset-0 flex items-center justify-center z-50">
+   <div className="bg-white p-6 shadow-md relative">
+     <h2 className="text-lg font-semibold text-gray-700 mb-4">Enter your Details</h2>
+ 
+     {/* Email Input */}
+     <input
+       type="email"
+       placeholder="frontera@offical.com"
+       value={email}
+       onChange={(e) => setEmail(e.target.value)}
+       onKeyDown={(event) => event.key === "Enter" && handleSubmit()}
+       className="border border-gray-300 p-2 rounded w-64 focus:outline-none focus:ring-2 focus:ring-gray-400 mb-4"
+     /><br/>
+ 
+     {/* Year of birth */}
+     <select
+        value={yearOfBirth}
+        onChange={(e) => setYearOfBirth(e.target.value)}
+        className="border border-gray-300 p-2 rounded w-64 focus:outline-none focus:ring-2 focus:ring-gray-400 mb-4"
+      >
+        <option value="">Select Year of Birth</option>
+        {Array.from({ length: 56 }, (_, i) => currentYear - (i + 15)).map((year) => (
+          <option key={year} value={year}>
+            {year}
+          </option>
+        ))}
+      </select>
+      <br/>
+ 
+     {/* State Dropdown */}
+     <select
+       value={state}
+       onChange={(e) => setState(e.target.value)}
+       className="border border-gray-300 p-2 rounded w-64 focus:outline-none focus:ring-2 focus:ring-gray-400 mb-4"
+     >
+       <option value="">Select State</option>
+       {[
+         "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", 
+         "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", 
+         "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", 
+         "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", 
+         "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", 
+         "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", 
+         "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", 
+         "Wisconsin", "Wyoming" 
+       ].map((state) => (
+         <option key={state} value={state}>
+           {state}
+         </option>
+       ))}
+     </select>
+ 
+     {/* Buttons */}
+     <div className="mt-4 flex justify-end gap-2">
+       <button
+         onClick={() => setShowModal(false)}
+         className="py-2 px-4 bg-gray-400 rounded hover:bg-red-300 transition"
+       >
+         Cancel
+       </button>
+       <button
+         onClick={handleSubmit}
+         className="py-2 px-4 bg-blue-900 text-white rounded hover:bg-blue-500 transition"
+       >
+         Submit
+       </button>
+     </div>
+   </div>
+ </div> 
       )}
     </div>
   );

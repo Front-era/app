@@ -8,8 +8,8 @@ import { Email } from './email.schema';
 export class EmailService {
   constructor(@InjectModel(Email.name) private emailModel: Model<Email>) {}
 
-  async addEmail(email: string): Promise<Email> {
-    const newEmail = new this.emailModel({ email });
+  async addEmail(email: string, yearOfBirth:number, state:string): Promise<Email> {
+    const newEmail = new this.emailModel({ email, yearOfBirth, state });
     return newEmail.save();
   }
 

@@ -7,8 +7,8 @@ export class EmailController {
   constructor(private readonly emailService: EmailService) {}
 
   @Post()
-  async addEmail(@Body('email') email: string) {
-    return this.emailService.addEmail(email);
+  async addEmail(@Body('email') email: string, @Body('yearOfBirth') yearOfBirth: number, @Body('state') state: string) {
+    return this.emailService.addEmail(email,yearOfBirth, state);
   }
 
   @Get()

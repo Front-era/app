@@ -4,7 +4,6 @@ import { EmailService } from './email.service';
 
 describe('EmailController', () => {
   let emailController: EmailController;
-  let emailService: EmailService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -21,7 +20,6 @@ describe('EmailController', () => {
     }).compile();
 
     emailController = module.get<EmailController>(EmailController);
-    emailService = module.get<EmailService>(EmailService);
   });
 
   it('should be defined', () => {

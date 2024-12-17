@@ -9,7 +9,9 @@ describe('MatchsuggestionController', () => {
       controllers: [MatchsuggestionController],
     }).compile();
 
-    controller = module.get<MatchsuggestionController>(MatchsuggestionController);
+    controller = module.get<MatchsuggestionController>(
+      MatchsuggestionController,
+    );
   });
 
   it('should be defined', () => {

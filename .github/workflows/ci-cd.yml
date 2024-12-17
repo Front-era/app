@@ -13,30 +13,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
 
-    - name: Install and Test Frontend
-      run: |
-        cd applications/frontend
-        npm install
-        npm run lint
-        npm test
+      - name: Install and Test Frontend
+        run: |
+          cd applications/frontend
+          npm install
+          npm run lint
 
-    - name: Build Frontend
-      run: |
-        cd applications/frontend
-        npm run build
+      - name: Build Frontend
+        run: |
+          cd applications/frontend
+          npm run build
 
-    - name: Deploy Frontend
-      run: |
-        echo "Deploying frontend to hosting service"
-        # Add deployment script here (e.g., Vercel CLI, AWS CLI)
+      - name: Deploy Frontend
+        run: |
+          echo "Deploying frontend to hosting service"
+          # Add deployment script here (e.g., Vercel CLI, AWS CLI)
 
   backend:
     runs-on: ubuntu-latest
@@ -47,27 +46,27 @@ jobs:
           - 27017:27017
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '22'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
 
-    - name: Install and Test Backend
-      run: |
-        cd applications/backend
-        npm install
-        npm run lint
-        npm test
+      - name: Install and Test Backend
+        run: |
+          cd applications/backend
+          npm install
+          npm run lint
+          npm test
 
-    - name: Build Backend
-      run: |
-        cd applications/backend
-        npm run build
+      - name: Build Backend
+        run: |
+          cd applications/backend
+          npm run build
 
-    - name: Deploy Backend
-      run: |
-        echo "Deploying backend to hosting service"
-        # Add deployment script here (e.g., Docker CLI, AWS CLI)
+      - name: Deploy Backend
+        run: |
+          echo "Deploying backend to hosting service"
+          # Add deployment script here (e.g., Docker CLI, AWS CLI)

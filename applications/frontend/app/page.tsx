@@ -1,317 +1,446 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import Planet from "../assets/background-planet.png";
-import Surface from "../assets/surface.png";
-import Logo from "../assets/logo.png";
-import Rocket from "../assets/rocket.png";
-import Instagram from "../assets/instagram.png";
-import axios from "axios";
+import LogoBlack from "../assets/blacklogo.png";
+import YT from "../assets/ytlogo.png";
+import Twitter from "../assets/twitterlogo.png";
+import LinkedIn from "../assets/linkedinlogo.png";
+import Instagram from "../assets/instalogo2.png";
+import "./globals.css";
+import { FaCircleArrowRight, FaCircleArrowLeft } from "react-icons/fa6";
+import ComingSoon from "./comingSoon";
 
 export default function Landing() {
-  // handle the parallax effect for landing
-  const [scrollPosition, setScrollPosition] = useState(0);
 
-  const handleScroll = (event: { preventDefault: () => void; deltaY: any }) => {
-    event.preventDefault(); // Disable native scrolling
-    const delta = event.deltaY; // Scroll direction
-    setScrollPosition((prev) => Math.max(0, Math.min(prev + delta, 100))); // Clamp between 0-100
-  };
+    let [current, setCurrent] = useState<number>(0);
+    let numSlides = 4;
 
-  useEffect(() => {
-    window.addEventListener("wheel", handleScroll, { passive: false });
-    return () => {
-      window.removeEventListener("wheel", handleScroll);
-    };
-  }, []);
-
-  // Handle the email modal and state
-  const [showModal, setShowModal] = useState(false);
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [population, setPopulation] = useState(0); // State for email count
-
-  const validateEmail = (email: string): boolean => {
-    // Check if email is empty or contains only spaces
-    if (!email.trim()) {
-      return false;
-    }
-
-    // Validate email format using regex
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
-  // Fetch email count initially
-  useEffect(() => {
-    const fetchEmailCount = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/emails");
-        setPopulation(response.data.length); // Set the initial population count
-      } catch (error) {
-        console.error("Error fetching initial email count:", error);
-        setPopulation(0); // Fallback in case of an error
-      }
-    };
-
-    fetchEmailCount();
-  }, []); // Runs only once on component mount
-
-  const handleSubmit = async () => {
-    if (!validateEmail(email)) {
-      alert("Please enter a valid email address.");
-      return;
-    }
-
-    setShowModal(false);
-    setEmail(""); // Clear email after submission
-    setError(""); // Clear error
-
-    // Call backend API
-    try {
-      const response = await axios.post("http://localhost:3000/emails", {
-        email,
-      });
-
-      if (response.status === 201) {
-        alert("Email successfully added!");
-
-        // Fetch updated email count after successful addition
-        try {
-          const countResponse = await axios.get("http://localhost:3000/emails");
-          setPopulation(countResponse.data.length); // Update the email count
-        } catch (countError) {
-          console.error("Error fetching updated email count:", countError);
-          alert("Failed to update population count. Please refresh the page.");
-        }
-      }
-    } catch (error: any) {
-      if (error.response) {
-        if (error.response.status === 409) {
-          setError("Email already exists. Please use a different email.");
-        } else {
-          setError("An unexpected error occurred. Please try again later.");
-        }
+    let prevSlide = () => {
+      if (current === 0) {
+        setCurrent(numSlides - 1);
       } else {
-        setError("Could not connect to the server. Please try again.");
+        setCurrent(current - 1);
       }
     }
-  };
 
-  const [isVertical, setIsVertical] = useState(false);
-
-  // Detect the orientation dynamically
-  useEffect(() => {
-    const checkOrientation = () => {
-      setIsVertical(window.innerHeight > window.innerWidth);
+    let nextSlide = () => {
+      if (current === numSlides - 1) {
+        setCurrent(0);
+      } else {
+        setCurrent(current + 1);
+      }
+    }
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+    // Toggle function for opening and closing the menu
+    const toggleMenu = () => {
+      setIsMenuOpen(!isMenuOpen);
     };
-
-    // Run on mount and resize
-    checkOrientation();
-    window.addEventListener("resize", checkOrientation);
-
-    return () => {
-      window.removeEventListener("resize", checkOrientation);
-    };
-  }, []);
-
+  
   return (
-    <div className={`relative h-screen overflow-hidden`}>
-      <div
-        className={`absolute inset-0 transition-all duration-500 ease-out ${
-          showModal ? "filter blur-sm" : ""
-        }`}
-      >
-        {/* Planet Background */}
-        <div
-          className="absolute inset-0 transition-all duration-500 ease-out pointer-events-none"
-          style={{
-            opacity: 1 - scrollPosition / 100,
-            transform: `translateY(${scrollPosition * -0.5}px)`,
-          }}
-        >
-          <div className="w-full flex aspect-[1387/1384] relative">
-            {/* Planet Background */}
-            <Image
-              src={Planet}
-              alt={"A look of Frontera from space."}
-              className="
-          object-cover w-full absolute z-10 
-          translate-y-[-3%] sm:translate-y-[-5%] md:translate-y-[-7.5%] lg:translate-y-[-9%] 
-          xl:translate-y-[-11%] 2xl:translate-y-[-11%]"
-            />
+    <div className="container mx-auto">
+      {/* Only ease when going into navbar, not when exiting (mobile) */}
+      <nav className={`container mx-auto border-solid px-6 flex items-center border-solid ${isMenuOpen ? 'transition ease duration-700 bg-gray-100' : ''}`}>
+        <a href="#">
+          <Image src={LogoBlack} alt={"LogoBlack"} className="hidden sm:flex h-24 w-auto opacity-40"/>
+        </a>
+        <ul className="invisible sm:visible flex-1 text-right" dir="rtl pe-20">
+            {/* Change to the actual links or coming soon page once those pages are created */}
+          <li className="list-none inline-block px-5"><a href="#" className="no-underline text-black px-2 font-mono hover:text-gray-600">Home</a> </li>
+          <li className="list-none inline-block px-5"><a href="#" className="no-underline text-black px-2 font-mono hover:text-gray-600">Our story</a> </li>
+          <li className="list-none inline-block px-5"><a href="#" className="no-underline text-black px-2 font-mono hover:text-gray-600">Projects</a> </li>
+          <li className="list-none inline-block px-5"><a href="#" className="no-underline text-black px-2 font-mono hover:text-gray-600">Contact Us</a> </li>
+          <li className="list-none inline-block px-5"><a href="#" className="no-underline text-black px-2 font-mono hover:text-gray-600">Faqs</a> </li>
+          <li className="list-none inline-block bg-black rounded-md mx-5 px-2 py-1"><a href="#" className="no-underline text-white px-2 font-mono hover:text-gray-200">Join us</a> </li>
+        </ul>
 
-            {/* Content and Logo */}
-            <div className="w-full absolute aspect-[1387/1384] z-30 relative">
-              {/* Logo */}
-              <Image
-                src={Logo}
-                alt={"Logo"}
-                className="
-            absolute w-[40%] left-[12.5%] 
-            top-[37%] sm:top-[32%] md:top-[26%] lg:top-[22%] 
-            xl:top-[17%] 2xl:top-[17%]"
-              />
+        <div className="absolute place-self-start pt-4 flex items-center sm:hidden">
+        {/* <!-- Mobile menu button--> */}
+        <button onClick={toggleMenu} type="button" className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-black hover:text-white focus:outline-none" aria-controls="mobile-menu" aria-expanded="false">
+          <svg className="block size-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+        
 
-              {/* Text */}
-              <h1
-                className="absolute text-white top-[44%] sm:top-[40%] md:top-[33%] lg:top-[28%] 
-          xl:top-[23%] 2xl:top-[22%]"
-                style={{
-                  fontSize: `clamp(1rem, 5vw, 15rem)`,
-                  left: "55.5%",
-                }}
-              >
-                Coming soon
-              </h1>
-              <h2
-                className="absolute text-white font-thin italic top-[51%] sm:top-[47%] md:top-[40%] lg:top-[35%] 
-          xl:top-[30%] 2xl:top-[29%]"
-                style={{
-                  fontSize: `clamp(0.5rem, 1.8vw, 10rem)`,
-                  left: "57%",
-                }}
-              >
-                Your Journey, Our Frontier.
-              </h2>
+        {/* Mobile menu, show/hide based on toggleMenu */}
+        <div className={`sm:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
+          <div className="space-y-1 text-right px-2 pb-3 pt-2">
+            <li className="list-none block pl-5"><a href="#" className="no-underline text-black px-2 font-mono hover:text-gray-600">Home</a> </li>
+            <li className="list-none block pl-5"><a href="#" className="no-underline text-black px-2 font-mono hover:text-gray-600">Our story</a> </li>
+            <li className="list-none block pl-5"><a href="#" className="no-underline text-black px-2 font-mono hover:text-gray-600">Projects</a> </li>
+            <li className="list-none block pl-5"><a href="#" className="no-underline text-black px-2 font-mono hover:text-gray-600">Contact Us</a> </li>
+            <li className="list-none block pl-5"><a href="#" className="no-underline text-black px-2 font-mono hover:text-gray-600">Faqs</a> </li>
+            <li className="list-none block pl-5"><a href="#" className="no-underline text-black px-2 font-mono hover:text-gray-600">Join Us</a> </li>
+          </div>
+        </div>
+      </nav>
 
-              {/* Button */}
-              <div
-                className={`absolute z-[100] pointer-events-auto ${
-                  isVertical
-                    ? "bottom-[3%] left-[50%] transform -translate-x-1/2"
-                    : "top-[3%] right-[12%]"
-                }`}
-              >
-                {/* Instagram Icon */}
-                <a
-                  href="https://fronter.me/Frontera"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`absolute w-[60%] transform -translate-x-[120%] translate-y-[-45%] ${
-                    isVertical ? "left-[30%] w-[80%] top-[48%]" : "top-[45%]"
-                  }`}
-                >
-                  <Image src={Instagram} alt="Instagram" />
-                </a>
+      {/* All content goes inside this div */}
+      <div className="container mx-auto border-solid px-6">
+        {/* First content */}
+        <div className="mt-8 sm:mt-48">
+          <p className="font-light text-gray-400 pb-10">Expedition 1 starts in []</p>
+          <h1 className="text-5xl sm:text-6xl font-semibold leading-normal sm:leading-normal ">6 WEEKS. ONE IDEA. ARE<br></br>YOU READY TO BUILD?</h1>
+        </div>
+        <div className="py-10 flex"> {/* Buttons */}
+          <button type="button" className="relative inline-flex items-center justify-center
+                                          rounded-md px-8 py-2 text-white bg-black
+                                          hover:text-grey-400 focus:outline-none focus:ring-2
+                                          focus:ring-inset focus:ring-white"
+                                          aria-controls="mobile-menu" aria-expanded="false">Apply to E1</button>
+          <button type="button" className="relative inline-flex items-center justify-center
+                                          rounded-md px-8 py-2 text-gray-700 hover:bg-black
+                                          hover:text-white focus:outline-none focus:ring-2
+                                          focus:ring-inset focus:ring-white ml-6"
+                                          aria-controls="mobile-menu" aria-expanded="false">See Projects</button>
+        </div>
+        <div className="py-28"></div>
 
-                {/* Notify Me Button */}
-                <button
-                  onClick={() => setShowModal(true)}
-                  className={`bg-gray-700 text-white rounded-full hover:bg-gray-600 transition translate-x-[35%] ${
-                    isVertical ? "left-[40%] w-[140%] top-[55%]" : "top-[45%]"
-                  }`}
-                  style={{
-                    fontSize: `clamp(1rem, 1vw, 2rem)`,
-                    padding: `clamp(1rem, 1vw, 1rem) clamp(1rem, 1.5vw, 2rem)`,
-                  }}
-                >
-                  Notify Me
-                </button>
+        {/* Journey content */}
+        <div className="flex-auto content-center">
+          <h1 className="text-5xl font-semibold text-center pb-8">the journey starts online</h1>
+          <p className="font-light text-center py-8 container-sm">This is where you take any idea that you're excited about and turn it<br></br>into something that people care about</p>
+        </div>
+        <div className="py-28"></div>
+
+          {/* Funny spaced boxes content */}
+          <div className="flex flex-row w-full">
+            <div className="basis-1/3">
+              <div className="flex flex-row w-full py-7 justify-center">
+                <div className="h-20 w-20 bg-gray-300 rounded-3xl"></div>
+              </div>
+              <h3 className="text-lg font-semibold text-center pb-8">join for free</h3>
+            </div>
+            <div className="basis-1/3">
+              <div className="flex flex-row py-7 justify-center w-full">
+                <div className="h-20 w-20 bg-gray-300 rounded-3xl"></div>
+              </div>
+              <h3 className="text-lg font-semibold text-center pb-8">work on ur idea</h3>
+            </div>
+            <div className="basis-1/3">
+              <div className="flex flex-row py-7 justify-center w-full">
+                <div className="h-20 w-20 bg-gray-300 rounded-3xl"></div>
+              </div>
+              <h3 className="text-lg font-semibold text-center pb-8">find your people</h3>
+            </div>
+        </div>
+        <div className="py-28"></div>
+
+        {/* Project type content */}
+        <div className="flex-auto content-center">
+          <h1 className="text-5xl font-semibold text-center pb-16">What kind of projects should I build?</h1>
+          <div className="flex-auto content-center"> {/* Using w-1/3 would really be ideal, but for some reason its messing up the centering, look into later*/}
+            <p className="hidden sm:block font-light text-gray-500 text-center">It can be anything! From getting your 100 subscribers,<br></br>
+                                                  building an app, researching new ai models, starting a small<br></br>
+                                                  business, making music, Anything. Nothing is too big or small.</p>
+            <p className="sm:hidden font-light text-gray-500 text-center">It can be anything! From getting your 100 subscribers,
+                                                  building an app, researching new ai models, starting a small
+                                                  business, making music, Anything. Nothing is too big or small.</p>
+          </div>
+          <p className="font-bold text-center sm:pt-1">Follow your Passion.</p>                                                         
+        </div>
+        <div className="py-28"></div>
+
+        {/* skool content */}
+        <div className="flex-auto content-center">
+          <h1 className="text-5xl font-semibold text-center pb-16">school, work (or both?)</h1>
+          <div className="flex-auto content-center">
+            <p className="font-light text-gray-500 text-center">We make sure everything is online and recorded so that you<br></br>
+                                                                can schedule your own time.</p>
+          </div>
+        </div>
+        <div className="py-28"></div>
+
+
+        {/* 1 livestream content */}
+        <div className="flex justify-center">
+            <button type="button" className="relative inline-flex text-sm
+                                          rounded-full px-8 py-2 mb-8 text-gray-500 bg-gray-300
+                                          focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                          >How does it work?</button>
+        </div>
+        <div className="flex-auto content-center">
+          <h1 className="text-5xl font-semibold text-center pb-16">every week, we have 1 livestream,<br></br>and 1 update</h1>
+          <div className="flex-auto content-center">
+            <p className="hidden sm:block font-light text-gray-500 pb-8 text-center">We make sure everything is online and recorded so that you<br></br>
+                                                                can schedule your own time. It's pretty simple. Build, get<br></br>
+                                                                feedback, iterate alongside hundreds of others</p>
+            <p className="sm:hidden font-light text-gray-500 pb-8 text-center">We make sure everything is online and recorded so that you
+                                                                can schedule your own time. It's pretty simple. Build, get
+                                                                feedback, iterate alongside hundreds of others</p>
+          </div>
+          <p className="font-light text-gray-500 text-center">not sure? <a className="underline hover:text-black" href="#">check our faqs</a></p> 
+        </div>
+        <div className="py-28"></div>
+
+        {/* Factions */}
+        <div className="flex-auto content-center">
+          <h1 className="text-5xl font-semibold text-center pb-8">Join a Faction</h1>
+        </div>
+        <div className="hidden lg:flex flex-row w-full">
+            <div className="basis-1/4 p-4">
+              <div className="flex flex-row py-7 justify-center w-full">
+                <div className="w-full h-96 bg-gray-300 rounded-md grid">
+                  <h3 className="text-lg font-semibold text-center pt-8">Pioneers</h3>
+                  <Image src={LogoBlack} alt={"LogoBlack"} className="justify-center w-auto opacity-40"/>
+
+                  <button type="button" className="place-self-end text-sm mr-6
+                                          rounded-md px-8 py-2 mb-6 text-black bg-white hover:bg-gray-100
+                                          focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                          >more</button> 
+                </div>
               </div>
             </div>
+            <div className="basis-1/4 p-4">
+              <div className="flex flex-row py-7 justify-center">
+                <div className="w-full h-96 bg-gray-300 rounded-md grid">
+                  <h3 className="text-lg font-semibold text-center pt-8">Navigators</h3>
+                  <Image src={LogoBlack} alt={"LogoBlack"} className="justify-center w-auto opacity-40"/>
+
+                  <button type="button" className="place-self-end text-sm mr-6
+                                          rounded-md px-8 py-2 mb-6 text-black bg-white hover:bg-gray-100
+                                          focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                          >more</button> 
+                </div>
+              </div>
+            </div>
+            <div className="basis-1/4 p-4">
+              <div className="flex flex-row py-7 justify-center">
+                <div className="w-full h-96 bg-gray-300 rounded-md grid">
+                  <h3 className="text-lg font-semibold text-center pt-8">Pathfinders</h3>
+                  <Image src={LogoBlack} alt={"LogoBlack"} className="justify-center w-auto opacity-40"/>
+
+                  <button type="button" className="place-self-end text-sm mr-6
+                                          rounded-md px-8 py-2 mb-6 text-black bg-white hover:bg-gray-100
+                                          focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                          >more</button> 
+                </div>
+              </div>
+            </div>
+            <div className="basis-1/4 p-4">
+              <div className="flex flex-row py-7 justify-center">
+                <div className="w-full h-96 bg-gray-300 rounded-md grid">
+                  <h3 className="text-lg font-semibold text-center pt-8">Prospectors</h3>
+                  <Image src={LogoBlack} alt={"LogoBlack"} className="justify-center w-auto opacity-40"/>
+
+                  <button type="button" className="place-self-end text-sm mr-6
+                                          rounded-md px-8 py-2 mb-6 text-black bg-white hover:bg-gray-100
+                                          focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                          >more</button> 
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+        <div className="lg:hidden w-full">
+            <div className="flex flex-row py-7 justify-center w-full">
+              <div className="w-full h-96 bg-gray-300 rounded-md grid">
+                <h3 className="text-lg font-semibold text-center pt-8">Pioneers</h3>
+                {/* <Image src={LogoBlack} alt={"LogoBlack"} className="justify-center h-32 w-auto opacity-40"/> */}
+
+                <button type="button" className="place-self-end text-sm mr-3 bg-white hover:bg-gray-100
+                                        rounded-md px-6 py-2 mb-4 text-black
+                                        focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                        >more</button> 
+              </div>
+            </div>
+            <div className="flex flex-row py-7 justify-center">
+              <div className="w-full h-96 bg-gray-300 rounded-md grid">
+                <h3 className="text-lg font-semibold text-center pt-8">Navigators</h3>
+                {/* <Image src={LogoBlack} alt={"LogoBlack"} className="justify-center w-auto opacity-40"/> */}
+
+                <button type="button" className="place-self-end text-sm mr-3
+                                        rounded-md px-6 py-2 mb-4 text-black bg-white hover:bg-gray-100
+                                        focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                        >more</button> 
+              </div>
+            </div>
+            <div className="flex flex-row py-7 justify-center">
+              <div className="w-full h-96 bg-gray-300 rounded-md grid">
+                <h3 className="text-lg font-semibold text-center pt-8">Pathfinders</h3>
+                {/* <Image src={LogoBlack} alt={"LogoBlack"} className="justify-center w-auto opacity-40"/> */}
+
+                <button type="button" className="place-self-end text-sm mr-3
+                                        rounded-md px-6 py-2 mb-4 text-black bg-white hover:bg-gray-100
+                                        focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                        >more</button> 
+              </div>
+            </div>
+            <div className="flex flex-row py-7 justify-center">
+              <div className="w-full h-96 bg-gray-300 rounded-md grid">
+                <h3 className="text-lg font-semibold text-center pt-8">Prospectors</h3>
+                {/* <Image src={LogoBlack} alt={"LogoBlack"} className="justify-center w-auto opacity-40"/> */}
+
+                <button type="button" className="place-self-end text-sm mr-3
+                                        rounded-md px-6 py-2 mb-4 text-black bg-white hover:bg-gray-100
+                                        focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                                        >more</button> 
+              </div>
+            </div>
+        </div>
+
+
+
+
+        <div className="py-28"></div>
+
+        {/* Double pictures */}
+        <div className="flex flex-row rounded-lg bg-slate-200 pt-4 pb-8">
+          <div className="basis-1/2 bg-white rounded-lg m-7 ">
+            <Image src={LogoBlack} alt={"LogoBlack"} className="justify-center w-auto opacity-40"/>      
+          </div>
+          <div className="basis-1/2 bg-white rounded-lg m-7 ">
+            <Image src={LogoBlack} alt={"LogoBlack"} className="justify-center w-auto opacity-40"/>      
+          </div>
+        </div>
+        <div className="py-28"></div>
+
+        {/* First content */}
+        <div className="flex flex-rows-2 mb-8">
+          <h1 className="text-5xl font-semibold leading-normal">We have a<br></br>community</h1>
+          <div className="bg-white rounded-lg">
+            {/* <Image src={LogoBlack} alt={"LogoBlack"} className="justify-center h-24 w-auto opacity-40"/>    IMAGE HERE   */}
+          </div>
+        </div>
+        <div className="flex">
+          <p className="hidden sm:block font-light text-gray-500 pb-8 text-left">Finding the right people can be a challenge --wether you're<br></br>
+                                                                searching for your next cofounder or just someone to<br></br>
+                                                                brainstorm with. That's where our [website] somes in!</p>
+          <p className="sm:hidden font-light text-gray-500 pb-8 text-left">Finding the right people can be a challenge --wether you're
+                                                                searching for your next cofounder or just someone to
+                                                                brainstorm with. That's where our [website] somes in!</p>
+        </div>
+        <div className="py-10 sm:py-28"></div>
+
+        {/* irl content */}
+        <div className="flex-auto content-center">
+          <h1 className="text-6xl font-semibold text-center pb-8">At the end we meet <br></br>irl</h1>
+          <p className="font-light text-center py-8 container-sm">After you hit the 6 week mark you are invited toan in person<br></br>event. The next irl is in [].</p>
+        </div>
+        <div className="py-10 sm:py-28"></div>
+
+        {/* Carousel content */}
+        <div className="overflow-hidden relative bg-gray-100 rounded-full">
+          <div className="flex transition ease-out duration-700" style={{
+              transform: `translateX(-${current * 100}%)`,
+            }}>
+            <Image src={LogoBlack} className="opacity-10 w-auto" alt="logo"/>
+            <Image src={LogoBlack} className="opacity-30 w-auto" alt="logo"/>
+            <Image src={LogoBlack} className="opacity-50 w-auto" alt="logo"/>
+            <Image src={LogoBlack} className="opacity-70 w-auto" alt="logo"/>
+          </div>
+
+          <div className="absolute top-0 h-full w-full justify-between items-center flex px-10 text-3xl">
+            <button onClick={prevSlide}> {/* FaCircleArrowLeft is the arrow that POINTS TO THE LEFT, meaning the one on the right not the one on the left*/}
+              <FaCircleArrowLeft/>
+            </button>
+            <button onClick={nextSlide}>
+              <FaCircleArrowRight/>
+            </button>
+            
+          </div>
+
+          <div className="absolute bottom-3 sm:bottom-8 flex justify-center gap-3 w-full">
+            <button><div onClick={() => {
+              setCurrent(0)
+            }} key="0" className={`rounded-full transition ease duration-700 h-4 sm:h-5 ${current === 0 ? 'bg-black w-7 sm:w-8' : 'bg-gray-300 w-4 sm:w-5'}`}></div></button>
+            <button><div onClick={() => {
+              setCurrent(1)
+            }} key="1" className={`rounded-full transition ease duration-700 h-4 sm:h-5 ${current === 1 ? 'bg-black w-7 sm:w-8' : 'bg-gray-400 w-4 sm:w-5'}`}></div></button>
+            <button><div onClick={() => {
+              setCurrent(2)
+            }} key="2" className={`rounded-full transition ease duration-700 h-4 sm:h-5 ${current === 2 ? 'bg-black w-7 sm:w-8' : 'bg-gray-500 w-4 sm:w-5'}`}></div></button>
+            <button><div onClick={() => {
+              setCurrent(3)
+            }} key="3" className={`rounded-full transition ease duration-700 h-4 sm:h-5 ${current === 3 ? 'bg-black w-7 sm:w-8' : 'bg-gray-600 w-4 sm:w-5'}`}></div></button>
           </div>
         </div>
 
-        {/* Surface Background */}
-        <div
-          className="absolute inset-0 transition-all duration-500 ease-out pointer-events-none"
-          style={{
-            opacity: scrollPosition / 100,
-            transform: `translateY(${(100 - scrollPosition) * 0.5}px)`,
-          }}
-        >
-          <Image
-            src={Surface}
-            alt="Surface View"
-            className="object-cover w-full h-screen"
-          />
+        <div className="py-10 sm:py-28"></div>
+
+
+
+        {/* next season content */}
+        <div className="flex-auto content-center">
+          <h1 className="text-6xl font-semibold text-center">I want to be part of the next <br></br> season</h1>
         </div>
+        <div className="py-10 flex justify-center"> {/* Buttons */}
+          <button type="button" className="relative inline-flex items-center justify-center
+                                          rounded-md px-8 py-2 text-white bg-black
+                                          hover:text-grey-400 focus:outline-none focus:ring-2
+                                          focus:ring-inset focus:ring-white"
+                                          aria-controls="mobile-menu" aria-expanded="false">Apply to E1</button>
+          <button type="button" className="relative inline-flex items-center justify-center
+                                          rounded-md px-8 py-2 text-gray-700 hover:bg-black
+                                          hover:text-white focus:outline-none focus:ring-2
+                                          focus:ring-inset focus:ring-white ml-6"
+                                          aria-controls="mobile-menu" aria-expanded="false">See Projects</button>
+        </div>
+        <div className="py-28"></div>
 
-        {/* Rocket and Light Effect */}
-        <div
-          className="absolute inset-0 transition-all duration-500 ease-out pointer-events-none"
-          style={{
-            opacity: scrollPosition / 100,
-            transform: `translateY(${(100 - scrollPosition) * 0.2}px)`,
-          }}
-        >
-          {/* Rocket */}
-          <Image
-            src={Rocket}
-            alt="Rocket"
-            className={` ${
-              isVertical
-                ? "absolute top-[20%] left-[30%] transform -translate-x-1/2 -translate-y-1/2 w-[130%] z-20"
-                : "absolute top-[33%] left-[30%] transform -translate-x-1/2 -translate-y-1/2 w-[130%] z-20"
-            }`}
-          />
-
-          {/* Add population text and number of population from the backend data */}
-          <div className="absolute transform -translate-y-[130%] -translate-x-[170%] top-[50%] left-[50%] text-center">
-            <p
-              className={` text-transparent bg-clip-text bg-gradient-to-r from-[#6565f1] via-[#574ae2] to-[#7867f9] opacity-85 ${
-                isVertical
-                  ? "transform -translate-x-[-120%] -translate-y-[70%]"
-                  : "transform -translate-x-[-100%] -translate-y-[-100%]"
-              }`}
-              style={{
-                fontSize: `clamp(2.5rem, 5vw, 5rem)`,
-                textShadow: `0 4px 8px rgba(0, 0, 0, 0.4)`,
-              }}
-            >
-              Population
-            </p>
-            <p
-              className={`font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#3f5b98] via-[#1fb6ff] to-[#1b5079] opacity-100 ${
-                isVertical
-                  ? "transform -translate-x-[-120%] -translate-y-[30%]"
-                  : "transform -translate-x-[-170%]"
-              }`}
-              style={{
-                fontSize: `clamp(5rem, 6vw, 5rem)`,
-                textShadow: `0 5px 10px rgba(0, 0, 0, 0.6)`,
-              }}
-            >
-              {population}
-            </p>
+        {/* Socials (for large screens) */}
+        <div className="hidden md:flex flex-row">
+          <div className="sm:basis-1/5">
+          
           </div>
-
-          {/* Light Effect */}
-          <div className="absolute top-[70%] left-[30%] transform -translate-x-1/2 -translate-y-1/2 z-10"></div>
-        </div>
-      </div>
-      {/* Modal */}
-      {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-white p-6  shadow-md relative">
-            <h2 className="text-lg font-semibold text-gray-700 mb-4">
-              Enter your Email
-            </h2>
-            <input
-              type="email"
-              placeholder="frontera@offical.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onKeyDown={(event) => event.key === "Enter" && handleSubmit()}
-              className="border border-gray-300 p-2 rounded w-64 focus:outline-none focus:ring-2 focus:ring-gray-400"
-            />
-            <div className="mt-4 flex justify-end gap-2">
-              <button
-                onClick={() => setShowModal(false)}
-                className="py-2 px-4 bg-gray-400 rounded hover:bg-red-300 transition"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleSubmit}
-                className="py-2 px-4 bg-blue-900 text-white rounded hover:bg-blue-500 transition"
-              >
-                Submit
-              </button>
+          <div className="sm:basis-3/5">
+            <div className="flex flex-row justify-center">
+            <div className="px-6">
+                  <a href="https://www.youtube.com/@Frontera-expeditions" target="none">
+                    <Image src={YT} alt={"YT"} className="justify-center h-14 w-auto"/>
+                  </a>
+            </div>
+            <div className="px-6">
+              <a href="https://www.x.com/" target="none">
+                <Image src={Twitter} alt={"TwitterLogo"} className="justify-center h-14 w-auto"/>
+              </a>
+            </div>
+            <div className="px-6">
+                <a href="https://www.linkedin.com/company/frontera-expeditions/posts/" target="none">
+                  <Image src={LinkedIn} alt={"LogoBlack"} className="justify-center h-14 w-auto"/>
+                </a>
+            </div>
+            <div className="px-6">
+              <a href="https://www.instagram.com/frontera.official/" target="none">
+                  <Image src={Instagram} alt={"InstaLogo"} className="justify-center h-14 w-auto"/>
+              </a> 
+            </div>
             </div>
           </div>
+          <div className="sm:basis-1/5">
+          
+          </div>
         </div>
-      )}
+
+        {/* Mobile socials */}
+        <div className="md:hidden flex-auto content-center">
+          <div className="py-6">
+                <a href="https://www.youtube.com/@Frontera-expeditions" target="none">
+                  <Image src={YT} alt={"YT"} className="justify-center mx-auto h-14 w-auto"/>
+                </a>
+          </div>
+          <div className="py-6">
+            <a href="https://www.x.com/" target="none">
+              <Image src={Twitter} alt={"TwitterLogo"} className="justify-center mx-auto h-14 w-auto"/>
+            </a>
+          </div>
+          <div className="py-6">
+              <a href="https://www.linkedin.com/company/frontera-expeditions/posts/" target="none">
+                <Image src={LinkedIn} alt={"LinkedIn"} className="justify-center mx-auto h-14 w-auto"/>
+              </a>
+          </div>
+          <div className="py-6">
+            <a href="https://www.instagram.com/frontera.official/" target="none">
+                <Image src={Instagram} alt={"InstaLogo"} className="justify-center mx-auto h-14 w-auto"/>
+            </a> 
+          </div>
+        </div>
+        <div className="py-28"></div>
+
+      </div>
     </div>
   );
 }

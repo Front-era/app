@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        custom: ['GreyCliff', 'sans-serif'],
+      },
       transitionProperty: {
         'opacity': 'opacity',
         'transform': 'transform',

@@ -24,21 +24,21 @@ export class AssignmentController {
     return this.assignmentService.findAll();
   }
 
-  @Get(":id")
-  async findById(@Param("id") id: string): Promise<Assignment> {
+  @Get(':id')
+  async findById(@Param('id') id: string): Promise<Assignment> {
     return this.assignmentService.findById(id);
   }
 
-  @Patch(":id")
+  @Patch(':id')
   async updateAssignment(
-    @Param("id") id: string,
+    @Param('id') id: string,
     @Body() assignmentData: Partial<Assignment>
   ): Promise<Assignment> {
     return this.assignmentService.updateAssignment(id, assignmentData);
   }
 
-  @Delete(":id")
-  async deleteAssignment(@Param("id") id: string): Promise<Assignment> {
+  @Delete(':id')
+  async deleteAssignment(@Param('id') id: string): Promise<Assignment> {
     return this.assignmentService.deleteAssignment(id);
   }
 }

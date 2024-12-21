@@ -12,7 +12,7 @@ export default function ComingSoon() {
   // handle the parallax effect for landing
   const [scrollPosition, setScrollPosition] = useState(0);
 
-  const handleScroll = (event: { preventDefault: () => void; deltaY: any }) => {
+  const handleScroll = (event: { preventDefault: () => void; deltaY: number }) => {
     event.preventDefault(); // Disable native scrolling
     const delta = event.deltaY; // Scroll direction
     setScrollPosition((prev) => Math.max(0, Math.min(prev + delta, 100))); // Clamp between 0-100

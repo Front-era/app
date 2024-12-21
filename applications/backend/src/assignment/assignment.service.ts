@@ -24,10 +24,10 @@ export class AssignmentService {
 
   async updateAssignment(
     id: string,
-    assignmentData: Partial<Assignment>
+    updateData: Partial<Assignment>
   ): Promise<Assignment> {
     return this.assignmentModel
-      .findByIdAndUpdate(id, assignmentData, { new: true } )
+      .findByIdAndUpdate(id, updateData, { new: true } )
       .exec();
   }
   

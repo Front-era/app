@@ -32,9 +32,9 @@ export class AssignmentController {
   @Patch(':id')
   async updateAssignment(
     @Param('id') id: string,
-    @Body() assignmentData: Partial<Assignment>
+    @Body() updateData: Partial<Assignment>
   ): Promise<Assignment> {
-    return this.assignmentService.updateAssignment(id, assignmentData);
+    return this.assignmentService.updateAssignment(id, updateData);
   }
 
   @Delete(':id')

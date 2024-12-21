@@ -1,14 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Planet from "../assets/background-planet.png";
-import Surface from "../assets/surface.png";
-import Logo from "../assets/logo.png";
-import Rocket from "../assets/rocket.png";
-import Instagram from "../assets/instagram.png";
+import Planet from "../../assets/background-planet.png";
+import Surface from "../../assets/surface.png";
+import Logo from "../../assets/logo.png";
+import Rocket from "../../assets/rocket.png";
+import Instagram from "../../assets/instagram.png";
 import axios from "axios";
-
-const currentYear = new Date().getFullYear();
 
 export default function ComingSoon() {
   // handle the parallax effect for landing
@@ -24,14 +22,14 @@ export default function ComingSoon() {
     let touchStartY = 0;
     
     const handleTouchStart = (event:TouchEvent) => {
-        touchStartY = event.touches[0].clientY; // Record touch 
+        touchStartY = event.touches[0].clientY; // Record initial touch position
     };
 
     const handleTouchMove = (event:TouchEvent) => {
         const touchY = event.touches[0].clientY;
         const delta = touchStartY - touchY; // Calculate scroll direction
-        setScrollPosition((prev) => Math.max(0, Math.min(prev + delta, 100)));
-        touchStartY = touchY; // Update touch 
+        setScrollPosition((prev) => Math.max(0, Math.min(prev + delta, 100))); // Clamp between 0-100
+        touchStartY = touchY; // Update touch position
     };
 
     window.addEventListener("wheel", handleScroll, { passive: false });
@@ -50,9 +48,7 @@ export default function ComingSoon() {
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const [state, setState] = useState("");
-  const [yearOfBirth, setYearOfBirth] = useState("");
-  const [population, setPopulation] = useState(0); 
+  const [population, setPopulation] = useState(0); // State for email count
 
   const validateEmail = (email: string): boolean => {
     // Check if email is empty or contains only spaces
@@ -138,9 +134,6 @@ export default function ComingSoon() {
   }, []);
 
   return (
- <>
-    <title>Frontera - Coming Soon</title>
-    <meta name="description" content="This is the home page description." />
     <div className={`relative h-screen overflow-hidden`}>
       <div
         className={`absolute inset-0 transition-all duration-500 ease-out ${
@@ -210,7 +203,7 @@ export default function ComingSoon() {
               >
                 {/* Instagram Icon */}
                 <a
-                  href="https://www.instagram.com/frontera.official/?utm_source=ig_web_button_share_sheet"
+                  href="https://fronter.me/Frontera"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`absolute w-[60%] transform -translate-x-[120%] translate-y-[-45%] ${
@@ -273,12 +266,12 @@ export default function ComingSoon() {
           />
 
           {/* Add population text and number of population from the backend data */}
-           <div className="absolute transform -translate-y-[130%] -translate-x-[170%] top-[50%] left-[50%] text-center">
+          <div className="absolute transform -translate-y-[130%] -translate-x-[170%] top-[50%] left-[50%] text-center">
             <p
                 className={`text-transparent bg-clip-text bg-gradient-to-r from-[#6565f1] via-[#574ae2] to-[#7867f9] opacity-85 ${
                 isVertical
-                    ? "transform -translate-x-[-120%] sm:-translate-y-[50%] md:-translate-y-[60%] lg:-translate-y-[70%]" 
-                    : "transform -translate-x-[-100%] sm:-translate-y-[-80%] md:-translate-y-[-90%] lg:-translate-y-[-100%]"
+                    ? "transform -translate-x-[-120%] sm:-translate-y-[50%] md:-translate-y-[60%] lg:-translate-y-[70%]" // Responsive Y values
+                    : "transform -translate-x-[-100%] sm:-translate-y-[-80%] md:-translate-y-[-90%] lg:-translate-y-[-100%]" // Responsive Y values
                 }`}
                 style={{
                 fontSize: `clamp(2.5rem, 5vw, 5rem)`,
@@ -290,8 +283,8 @@ export default function ComingSoon() {
             <p
                 className={`font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#3f5b98] via-[#1fb6ff] to-[#1b5079] opacity-100 ${
                 isVertical
-                    ? "transform -translate-x-[-120%] sm:-translate-y-[10%] md:-translate-y-[20%] lg:-translate-y-[20%]"
-                    : "transform -translate-x-[-170%] sm:translate-y-[5px] md:translate-y-[10px] lg:translate-y-[0px]" 
+                    ? "transform -translate-x-[-120%] sm:-translate-y-[10%] md:-translate-y-[20%] lg:-translate-y-[20%]" // Responsive Y values
+                    : "transform -translate-x-[-170%] sm:translate-y-[5px] md:translate-y-[10px] lg:translate-y-[0px]" // Responsive Y values
                 }`}
                 style={{
                 fontSize: `clamp(5rem, 6vw, 5rem)`,
@@ -302,83 +295,43 @@ export default function ComingSoon() {
             </p>
           </div>
 
+
           {/* Light Effect */}
           <div className="absolute top-[70%] left-[30%] transform -translate-x-1/2 -translate-y-1/2 z-10"></div>
         </div>
       </div>
       {/* Modal */}
       {showModal && (
-   <div className="fixed inset-0 flex items-center justify-center z-50">
-   <div className="bg-white p-6 shadow-md relative">
-     <h2 className="text-lg font-semibold text-gray-700 mb-4">Enter your Details</h2>
- 
-     {/* Email Input */}
-     <input
-       type="email"
-       placeholder="frontera@offical.com"
-       value={email}
-       onChange={(e) => setEmail(e.target.value)}
-       onKeyDown={(event) => event.key === "Enter" && handleSubmit()}
-       className="border border-gray-300 p-2 rounded w-64 focus:outline-none focus:ring-2 focus:ring-gray-400 mb-4"
-     /><br/>
- 
-     {/* Year of birth */}
-     <select
-        value={yearOfBirth}
-        onChange={(e) => setYearOfBirth(e.target.value)}
-        className="border border-gray-300 p-2 rounded w-64 focus:outline-none focus:ring-2 focus:ring-gray-400 mb-4"
-      >
-        <option value="">Select Year of Birth</option>
-        {Array.from({ length: 56 }, (_, i) => currentYear - (i + 15)).map((year) => (
-          <option key={year} value={year}>
-            {year}
-          </option>
-        ))}
-      </select>
-      <br/>
- 
-     {/* State Dropdown */}
-     <select
-       value={state}
-       onChange={(e) => setState(e.target.value)}
-       className="border border-gray-300 p-2 rounded w-64 focus:outline-none focus:ring-2 focus:ring-gray-400 mb-4"
-     >
-       <option value="">Select State</option>
-       {[
-         "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", 
-         "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", 
-         "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", 
-         "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", 
-         "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", 
-         "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", 
-         "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", 
-         "Wisconsin", "Wyoming" 
-       ].map((state) => (
-         <option key={state} value={state}>
-           {state}
-         </option>
-       ))}
-     </select>
- 
-     {/* Buttons */}
-     <div className="mt-4 flex justify-end gap-2">
-       <button
-         onClick={() => setShowModal(false)}
-         className="py-2 px-4 bg-gray-400 rounded hover:bg-red-300 transition"
-       >
-         Cancel
-       </button>
-       <button
-         onClick={handleSubmit}
-         className="py-2 px-4 bg-blue-900 text-white rounded hover:bg-blue-500 transition"
-       >
-          Submit
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="bg-white p-6  shadow-md relative">
+            <h2 className="text-lg font-semibold text-gray-700 mb-4">
+              Enter your Email
+            </h2>
+            <input
+              type="email"
+              placeholder="frontera@offical.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={(event) => event.key === "Enter" && handleSubmit()}
+              className="border border-gray-300 p-2 rounded w-64 focus:outline-none focus:ring-2 focus:ring-gray-400"
+            />
+            <div className="mt-4 flex justify-end gap-2">
+              <button
+                onClick={() => setShowModal(false)}
+                className="py-2 px-4 bg-gray-400 rounded hover:bg-red-300 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmit}
+                className="py-2 px-4 bg-blue-900 text-white rounded hover:bg-blue-500 transition"
+              >
+                Submit
               </button>
             </div>
           </div>
         </div>
       )}
     </div>
-  </>
   );
 }

@@ -9,7 +9,15 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        custom: ['GreyCliff', 'sans-serif'],
+      },
+      transitionProperty: {
+        'opacity': 'opacity',
+        'transform': 'transform',
+      },
+    },
   },
   plugins: [],
 }

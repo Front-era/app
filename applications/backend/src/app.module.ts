@@ -19,12 +19,15 @@ import { ColonyModule } from './colony/colony.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // This makes ConfigModule available globally
+      envFilePath:'.env'
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGODB_URI'), // Use ConfigService to get the MongoDB URI
-      }),
+      useFactory: (configService: ConfigService) => {
+        const uri = configService.get<string>('MONGODB_URI');
+        console.log('Resolved MongoDB URI:', uri); // Debugging log
+        return { uri };
+      },
       inject: [ConfigService],
     }),
     EmailModule,

@@ -8,14 +8,14 @@ import LinkedIn from "../assets/linkedinlogo.png";
 import Instagram from "../assets/instalogo2.png";
 import "./globals.css";
 import { FaCircleArrowRight, FaCircleArrowLeft } from "react-icons/fa6";
-import ComingSoon from "./comingSoon";
+
 
 export default function Landing() {
 
-    let [current, setCurrent] = useState<number>(0);
-    let numSlides = 4;
+    const [current, setCurrent] = useState<number>(0);
+    const numSlides = 4;
 
-    let prevSlide = () => {
+    const prevSlide = () => {
       if (current === 0) {
         setCurrent(numSlides - 1);
       } else {
@@ -23,7 +23,7 @@ export default function Landing() {
       }
     }
 
-    let nextSlide = () => {
+    const nextSlide = () => {
       if (current === numSlides - 1) {
         setCurrent(0);
       } else {
@@ -101,7 +101,7 @@ export default function Landing() {
         {/* Journey content */}
         <div className="flex-auto content-center">
           <h1 className="text-5xl font-semibold text-center pb-8">the journey starts online</h1>
-          <p className="font-light text-center py-8 container-sm">This is where you take any idea that you're excited about and turn it<br></br>into something that people care about</p>
+          <p className="font-light text-center py-8 container-sm">This is where you take any idea that you&apos;re excited about and turn it<br></br>into something that people care about</p>
         </div>
         <div className="py-28"></div>
 
@@ -165,10 +165,10 @@ export default function Landing() {
           <h1 className="text-5xl font-semibold text-center pb-16">every week, we have 1 livestream,<br></br>and 1 update</h1>
           <div className="flex-auto content-center">
             <p className="hidden sm:block font-light text-gray-500 pb-8 text-center">We make sure everything is online and recorded so that you<br></br>
-                                                                can schedule your own time. It's pretty simple. Build, get<br></br>
+                                                                can schedule your own time. It&apos;s pretty simple. Build, get<br></br>
                                                                 feedback, iterate alongside hundreds of others</p>
             <p className="sm:hidden font-light text-gray-500 pb-8 text-center">We make sure everything is online and recorded so that you
-                                                                can schedule your own time. It's pretty simple. Build, get
+                                                                can schedule your own time. It&apos;s pretty simple. Build, get
                                                                 feedback, iterate alongside hundreds of others</p>
           </div>
           <p className="font-light text-gray-500 text-center">not sure? <a className="underline hover:text-black" href="#">check our faqs</a></p> 
@@ -306,12 +306,12 @@ export default function Landing() {
           </div>
         </div>
         <div className="flex">
-          <p className="hidden sm:block font-light text-gray-500 pb-8 text-left">Finding the right people can be a challenge --wether you're<br></br>
+          <p className="hidden sm:block font-light text-gray-500 pb-8 text-left">Finding the right people can be a challenge --wether you&apos;re<br></br>
                                                                 searching for your next cofounder or just someone to<br></br>
-                                                                brainstorm with. That's where our [website] somes in!</p>
-          <p className="sm:hidden font-light text-gray-500 pb-8 text-left">Finding the right people can be a challenge --wether you're
+                                                                brainstorm with. That&apos;s where our [website] somes in!</p>
+          <p className="sm:hidden font-light text-gray-500 pb-8 text-left">Finding the right people can be a challenge --wether you&apos;re
                                                                 searching for your next cofounder or just someone to
-                                                                brainstorm with. That's where our [website] somes in!</p>
+                                                                brainstorm with. That&apos;s where our [website] somes in!</p>
         </div>
         <div className="py-10 sm:py-28"></div>
 

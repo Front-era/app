@@ -21,11 +21,20 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Install and Test Frontend
+      - name: Install Frontend Dependencies
         run: |
           cd applications/frontend
           npm install
+
+      - name: Lint Frontend
+        run: |
+          cd applications/frontend
           npm run lint
+
+      # - name: Test Frontend
+      #   run: |
+      #     cd applications/frontend
+      #     npm run test
 
       - name: Build Frontend
         run: |
@@ -54,11 +63,21 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Install and Test Backend
+      - name: Install Backend Dependencies
         run: |
           cd applications/backend
           npm install
+
+      - name: Lint Backend
+        run: |
+          cd applications/backend
           npm run lint
+
+      - name: Test Backend
+        run: |
+          cd applications/backend
+          npm run test
+
 
       - name: Build Backend
         run: |

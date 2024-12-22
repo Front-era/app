@@ -12,12 +12,11 @@ export class SubmissionService {
   async createSubmission(
     submissionData: Partial<Submission>,
   ): Promise<Submission> {
-    const newSubmission = new this.submissionModel(submissionData);
-    return newSubmission.save();
+    return this.submissionModel.create(submissionData);
   }
 
   async findAll(): Promise<Submission[]> {
-    return this.submissionModel.find().exec();
+    return this.submissionModel.find({}).exec();
   }
 
   async findById(id: string): Promise<Submission> {

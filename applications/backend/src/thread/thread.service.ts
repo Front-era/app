@@ -8,12 +8,12 @@ export class ThreadService {
   constructor(@InjectModel(Thread.name) private threadModel: Model<Thread>) {}
 
   async createThread(threadData: Partial<Thread>): Promise<Thread> {
-    const newThread = new this.threadModel(threadData);
-    return newThread.save();
+    const newThread = await this.threadModel.create(threadData);
+    return newThread;
   }
 
   async findAll(): Promise<Thread[]> {
-    return this.threadModel.find().exec();
+    return this.threadModel.find({}).exec();
   }
 
   async findById(id: string): Promise<Thread> {

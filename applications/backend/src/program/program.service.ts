@@ -10,12 +10,12 @@ export class ProgramService {
   ) {}
 
   async createProgram(programData: Partial<Program>): Promise<Program> {
-    const newProgram = new this.programModel(programData);
+    const newProgram = await this.programModel.create(programData);
     return newProgram.save();
   }
 
   async findAll(): Promise<Program[]> {
-    return this.programModel.find().exec();
+    return this.programModel.find({}).exec();
   }
 
   async findById(id: string): Promise<Program> {

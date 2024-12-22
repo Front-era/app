@@ -6,6 +6,7 @@ import { Submission } from './submission.schema';
 
 describe('SubmissionService', () => {
   let service: SubmissionService;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let model: Model<Submission>;
 
   const mockSubmission = {
@@ -26,12 +27,15 @@ describe('SubmissionService', () => {
     find: jest.fn().mockImplementation(() => ({
       exec: jest.fn().mockResolvedValue([mockSubmission]),
     })),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     findById: jest.fn().mockImplementation((id) => ({
       exec: jest.fn().mockResolvedValue(mockSubmission),
     })),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     findByIdAndUpdate: jest.fn().mockImplementation((id, updateData) => ({
       exec: jest.fn().mockResolvedValue({ ...mockSubmission, ...updateData }),
     })),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     findByIdAndDelete: jest.fn().mockImplementation((id) => ({
       exec: jest.fn().mockResolvedValue(mockSubmission),
     })),

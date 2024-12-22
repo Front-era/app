@@ -4,6 +4,7 @@ import { ProjectService } from './project.service';
 
 describe('ProjectController', () => {
   let controller: ProjectController;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let service: ProjectService;
 
   const mockProject = {

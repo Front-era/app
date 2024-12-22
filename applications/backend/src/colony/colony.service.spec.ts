@@ -6,6 +6,7 @@ import { Colony } from './colony.schema';
 
 describe('ColonyService', () => {
   let service: ColonyService;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let model: Model<Colony>;
 
   const mockColony = {

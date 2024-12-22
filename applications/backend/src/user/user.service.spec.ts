@@ -6,6 +6,7 @@ import { User } from './user.schema';
 
 describe('UserService', () => {
   let service: UserService;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let model: Model<User>;
 
   const mockUser = {

@@ -5,13 +5,14 @@ import {
   Body,
   Param,
   Put,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   Delete,
   Query,
 } from '@nestjs/common';
 import { ProjectService } from './project.service';
 import { Project } from './project.schema';
 import { CreateProjectDto } from './project.dto';
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Types } from 'mongoose';
 
 @Controller('projects')

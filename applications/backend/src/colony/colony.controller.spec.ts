@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ColonyController } from './colony.controller';
 import { ColonyService } from './colony.service';
-import { Colony } from './colony.schema';
 
 describe('ColonyController', () => {
   let controller: ColonyController;

@@ -6,6 +6,7 @@ import { Program } from './program.schema';
 
 describe('ProgramService', () => {
   let service: ProgramService;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let model: Model<Program>;
 
   const mockProgram = {

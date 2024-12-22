@@ -6,6 +6,7 @@ import { Interest } from './interest.schema';
 
 describe('InterestService', () => {
   let service: InterestService;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let model: Model<Interest>;
 
   const mockInterest = {
@@ -26,19 +27,22 @@ describe('InterestService', () => {
       ...dto,
       save: jest.fn().mockResolvedValue(dto),
     })),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     find: jest.fn().mockImplementation((query = {}) => ({
       exec: jest.fn().mockResolvedValue([mockInterest]),
     })),
-
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     findById: jest.fn().mockImplementation((id) => ({
       exec: jest.fn().mockResolvedValue(mockInterest),
     })),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     findByIdAndUpdate: jest.fn().mockImplementation((id, updateData) => ({
       exec: jest.fn().mockResolvedValue({
         ...mockInterest,
         ...updateData,
       }),
     })),
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     findByIdAndDelete: jest.fn().mockImplementation((id) => ({
       exec: jest.fn().mockResolvedValue(mockInterest),
     })),

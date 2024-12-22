@@ -2,7 +2,6 @@ import { Controller, Get, Post, UseFilters, Body } from '@nestjs/common';
 import { EmailService } from './email.service';
 
 import { MongoExceptionFilter } from '../filters/mongo-exception.filter';
-import { get } from 'mongoose';
 @UseFilters(MongoExceptionFilter)
 @Controller('emails')
 export class EmailController {

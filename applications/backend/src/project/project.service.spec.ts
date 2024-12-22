@@ -7,7 +7,9 @@ import { Project } from './project.schema';
 
 describe('ProjectService', () => {
   let service: ProjectService;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let model: Model<Project>;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let elasticService: ElasticSearchService;
 
   const mockProject = {

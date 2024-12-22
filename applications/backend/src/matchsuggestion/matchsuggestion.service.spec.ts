@@ -6,6 +6,7 @@ import { MatchSuggestion } from './matchsuggestion.schema';
 
 describe('MatchSuggestionService', () => {
   let service: MatchSuggestionService;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let model: Model<MatchSuggestion>;
 
   const mockSuggestion = {

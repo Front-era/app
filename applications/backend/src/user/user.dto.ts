@@ -3,11 +3,13 @@ import {
   IsEmail,
   IsOptional,
   IsArray,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ValidateNested,
 } from 'class-validator';
 // import { Type } from 'class-transformer';
 
 // ProfileInfo class for nested validation
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class ProfileInfo {
   @IsOptional()
   @IsString()

@@ -6,6 +6,7 @@ import { Model, Types } from 'mongoose';
 
 describe('MessageService', () => {
   let service: MessageService;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let model: Model<Message>;
 
   const mockMessage = {

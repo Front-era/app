@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import mongoose, { Model } from 'mongoose';
 import { Project } from './/project.schema';
 import { CreateProjectDto } from './project.dto';
 // import { ElasticSearchService } from '../elastic.service';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { BadRequestException } from '@nestjs/common';
 
 @Injectable()
@@ -143,6 +145,7 @@ export class ProjectService {
   }
 
   // Search with Elasticsearch
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async searchProjects(query: string): Promise<any> {
     // return this.elasticSearchService.search(query);
   }
@@ -150,6 +153,7 @@ export class ProjectService {
   async bulkIndexProjects(): Promise<void> {
     const projects = await this.projectModel.find().exec();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const documents = projects.map((project) => ({
       id: project._id.toString(),
       body: {

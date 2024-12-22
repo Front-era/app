@@ -11,6 +11,8 @@ on:
 jobs:
   frontend:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_CLERK_PUBLIC_KEY: default-mock-public-key
 
     steps:
       - name: Checkout code

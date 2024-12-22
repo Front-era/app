@@ -8,12 +8,12 @@ export class ColonyService {
   constructor(@InjectModel(Colony.name) private colonyModel: Model<Colony>) {}
 
   async createColony(colonyData: Partial<Colony>): Promise<Colony> {
-    const newColony = new this.colonyModel(colonyData);
-    return newColony.save();
+    const newColony = await this.colonyModel.create(colonyData);
+    return newColony;
   }
 
   async findAll(): Promise<Colony[]> {
-    return this.colonyModel.find().exec();
+    return this.colonyModel.find({}).exec();
   }
 
   async findById(id: string): Promise<Colony> {

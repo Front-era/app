@@ -10,12 +10,12 @@ export class MessageService {
   ) {}
 
   async createMessage(messageData: Partial<Message>): Promise<Message> {
-    const newMessage = new this.messageModel(messageData);
-    return newMessage.save();
+    const message = await this.messageModel.create(messageData);
+    return message.save();
   }
 
   async findAll(): Promise<Message[]> {
-    return this.messageModel.find().exec();
+    return this.messageModel.find({}).exec();
   }
 
   async findById(id: string): Promise<Message> {

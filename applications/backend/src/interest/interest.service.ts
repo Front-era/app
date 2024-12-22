@@ -10,12 +10,12 @@ export class InterestService {
   ) {}
 
   async createInterest(interestData: Partial<Interest>): Promise<Interest> {
-    const newInterest = new this.interestModel(interestData);
+    const newInterest = await this.interestModel.create(interestData);
     return newInterest.save();
   }
 
   async findAll(): Promise<Interest[]> {
-    return this.interestModel.find().exec();
+    return this.interestModel.find({}).exec();
   }
 
   async findById(id: string): Promise<Interest> {

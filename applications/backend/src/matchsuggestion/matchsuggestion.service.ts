@@ -13,12 +13,13 @@ export class MatchSuggestionService {
   async createMatchSuggestion(
     suggestionData: Partial<MatchSuggestion>,
   ): Promise<MatchSuggestion> {
-    const newSuggestion = new this.matchSuggestionModel(suggestionData);
+    const newSuggestion =
+      await this.matchSuggestionModel.create(suggestionData);
     return newSuggestion.save();
   }
 
   async findAll(): Promise<MatchSuggestion[]> {
-    return this.matchSuggestionModel.find().exec();
+    return this.matchSuggestionModel.find({}).exec();
   }
 
   async findById(id: string): Promise<MatchSuggestion> {

@@ -29,9 +29,6 @@ export class User extends Document {
 
   @Prop({ type: [Types.ObjectId], ref: 'Project' })
   projects: Types.ObjectId[];
-
-  @Prop({ default: false })
-  lookingForCofounder: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -7,7 +7,7 @@ export class Submission extends Document {
   projectId: Types.ObjectId;
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  submittedBy: Types.ObjectId;
+  userId: Types.ObjectId;
 
   @Prop({
     type: {
@@ -27,6 +27,12 @@ export class Submission extends Document {
 
   @Prop({ type: String, required: true })
   type: string;
+
+  @Prop({ type: Types.ObjectId, ref: 'Assignment', required: true })
+  assignmentId: Types.ObjectId;
+
+  @Prop({ type: Boolean, required: true })
+  consent: boolean;
 }
 
 export const SubmissionSchema = SchemaFactory.createForClass(Submission);

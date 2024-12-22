@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@clerk/nextjs": "^6.4.0",
+    "@vercel/analytics": "^1.4.1"
+  }
+}

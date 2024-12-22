@@ -14,6 +14,7 @@ import { SubmissionModule } from './submission/submission.module';
 import { MatchSuggestionModule } from './matchsuggestion/matchsuggestion.module';
 import { ProgramModule } from './program/program.module';
 import { ColonyModule } from './colony/colony.module';
+import { AssignmentModule } from './assignment/assignment.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { ColonyModule } from './colony/colony.module';
     MatchSuggestionModule,
     ProgramModule,
     ColonyModule,
+    AssignmentModule,
   ],
   controllers: [AppController, UserController],
   providers: [AppService],

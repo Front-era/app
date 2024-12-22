@@ -37,6 +37,13 @@ export class SubmissionController {
   ): Promise<Submission[]> {
     return this.submissionService.findByProject(projectId);
   }
+  
+  @Get('/user/:userId')
+  async findByUser(
+    @Param('userId') userId: string,
+  ): Promise<Submission[]> {
+    return this.submissionService.findByUser(userId);
+  }
 
   @Patch(':id')
   async updateSubmission(

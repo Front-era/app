@@ -27,6 +27,10 @@ export class SubmissionService {
     return this.submissionModel.find({ projectId }).exec();
   }
 
+  async findByUser(userId: string): Promise<Submission[]> {
+    return this.submissionModel.find({ userId }).exec();
+  }
+
   async updateSubmission(
     id: string,
     updateData: Partial<Submission>,

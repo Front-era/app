@@ -3,9 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserController } from './user/user.controller';
 import { EmailModule } from './email/email.module';
-import { UserModule } from './user/user.module';
 import { ProjectModule } from './project/project.module';
 import { InterestModule } from './interest/interest.module';
 import { ThreadModule } from './thread/thread.module';
@@ -14,6 +12,9 @@ import { SubmissionModule } from './submission/submission.module';
 import { MatchSuggestionModule } from './matchsuggestion/matchsuggestion.module';
 import { ProgramModule } from './program/program.module';
 import { ColonyModule } from './colony/colony.module';
+import { Users } from './users/users.schema';
+import { UsersModule } from './users/users.module';
+import { UsersController } from './users/users.controller';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { ColonyModule } from './colony/colony.module';
       inject: [ConfigService],
     }),
     EmailModule,
-    UserModule,
+    UsersModule,
     ProjectModule,
     InterestModule,
     ThreadModule,
@@ -38,7 +39,7 @@ import { ColonyModule } from './colony/colony.module';
     ProgramModule,
     ColonyModule,
   ],
-  controllers: [AppController, UserController],
+  controllers: [AppController, UsersController],
   providers: [AppService],
 })
 export class AppModule {}

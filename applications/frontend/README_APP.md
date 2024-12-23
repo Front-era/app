@@ -37,7 +37,7 @@ How to Add Routes
         src/app/os/settings/page.tsx
     . Content:
         export default function SettingsPage() {
-            return <h1>OS Settings</h1>;
+            return <>OS Settings</>;
         }
 
 Layouts

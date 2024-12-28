@@ -1,7 +1,27 @@
 // /os/profile
 
 "use client";
-import { useState } from "react";
+import { ReactElement, useState } from "react";
+import demoPfp from "../assets/demopfp.jpg";
+import demoColony from "../assets/democolonypic.jpg";
+import styles from "../../tooltip.module.css";
+
+function InfoBubble(props: { message: string }): ReactElement {
+  return (
+    <div className="w-5 h-5 mx-2 inline-block">
+      <div>
+        <div 
+          className={`relative inline-block rounded-full bg-zinc-400 hover:bg-zinc-300 ${styles.tooltip}`}
+        >
+          <div className="w-5 h-5 flex items-center justify-center">
+            <span className="text-xs text-black">i</span>
+          </div>
+          <span className={styles.tooltiptext}>{props.message}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function ProfilePage() {
   // Toggle states
@@ -20,7 +40,9 @@ export default function ProfilePage() {
       <div className="flex-1 flex flex-col gap-6">
         {/* Card 1: Profile Image */}
         <div className="bg-white rounded-lg p-6 shadow-md flex flex-col items-center">
-          <div className="w-48 h-48 bg-pink-300 rounded-full shadow-lg"></div>
+          <div className="w-48 h-48 bg-pink-300 rounded-full shadow-lg overflow-hidden">
+            <img src={demoPfp.src} alt="" />
+          </div>
         </div>
 
         {/* Card 2: Profile Details */}
@@ -52,7 +74,9 @@ export default function ProfilePage() {
 
         {/* My Colony */}
         <div className="bg-white rounded-lg p-6 shadow-md text-center">
-          <div className="w-36 h-36 bg-pink-300 rounded-full mx-auto shadow-lg"></div>
+          <div className="w-36 h-36 bg-pink-300 rounded-full mx-auto shadow-lg overflow-hidden">
+            <img src={demoColony.src} alt="" />
+          </div>
           <h3 className="text-xl font-bold text-gray-800 mt-6">Konoha</h3>
         </div>
       </div>
@@ -61,9 +85,12 @@ export default function ProfilePage() {
       <div className="flex-1 flex flex-col gap-6">
         {/* Auto Consent */}
         <div className="bg-white rounded-lg p-6 shadow-md flex items-center justify-between">
-          <p className="text-gray-800 text-lg font-medium">
-            Auto Consent to Frontera Use
-          </p>
+          <div className="inline-block">
+            <p className="text-gray-800 text-lg font-medium">
+              Auto Consent to Frontera Use
+              <InfoBubble message="Hello World!"/>
+            </p>
+          </div>
           <button
             onClick={toggleAutoConsent}
             className={`w-16 h-8 rounded-full flex items-center transition-colors duration-200 ease-in-out ${
@@ -80,7 +107,10 @@ export default function ProfilePage() {
 
         {/* Private Account */}
         <div className="bg-white rounded-lg p-6 shadow-md flex items-center justify-between">
-          <p className="text-gray-800 text-lg font-medium">Private Account</p>
+          <p className="text-gray-800 text-lg font-medium">
+            Private Account
+            <InfoBubble message="Hello World!"/>
+          </p>
           <button
             onClick={togglePrivateAccount}
             className={`w-16 h-8 rounded-full flex items-center transition-colors duration-200 ease-in-out ${
@@ -97,7 +127,10 @@ export default function ProfilePage() {
 
         {/* Other Settings */}
         <div className="bg-white rounded-lg p-6 shadow-md flex items-center justify-between">
-          <p className="text-gray-800 text-lg font-medium">Other Settings</p>
+          <p className="text-gray-800 text-lg font-medium">
+            Other Settings
+            <InfoBubble message="Hello World!"/>
+          </p>
           <button
             onClick={toggleOtherSettings}
             className={`w-16 h-8 rounded-full flex items-center transition-colors duration-200 ease-in-out ${

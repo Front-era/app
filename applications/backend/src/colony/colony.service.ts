@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Colony } from './colony.schema';
+import { User } from 'src/user/user.schema';
 
 @Injectable()
 export class ColonyService {
@@ -18,6 +19,14 @@ export class ColonyService {
 
   async findById(id: string): Promise<Colony> {
     return this.colonyModel.findById(id).exec();
+  }
+
+  async findAllUsers(id: string): Promise<User[]> {
+    const colony = await this.colonyModel.findById(id).populate('users').exec();
+    if (!colony) {
+      throw new NotFoundException(`Colony with ID ${id} not found.`);
+    }
+    return colony.users as unknown as User[];
   }
 
   async updateColony(id: string, updateData: Partial<Colony>): Promise<Colony> {

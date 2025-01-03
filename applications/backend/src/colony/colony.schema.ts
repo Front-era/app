@@ -4,19 +4,24 @@ import { Document, Types } from 'mongoose';
 @Schema()
 export class Colony extends Document {
   @Prop({ required: true })
-  title: string;
+  name: string;
 
   @Prop({ required: true })
-  url: string;
+  description: string;
 
-  @Prop({ required: true })
-  category: string;
+  @Prop({ type: [Types.ObjectId], ref: 'User' })
+  users: Types.ObjectId[];
 
-  @Prop({ type: [String] })
-  tags: string[];
-
-  @Prop({ type: [Types.ObjectId], ref: 'Project' })
-  projects: Types.ObjectId[];
+  @Prop({
+    type: {
+      type: { type: String, enum: ['Point'], required: true },
+      coordinates: { type: [Number], required: true },
+    },
+  })
+  location: {
+    type: 'Point';
+    coordinates: [number, number];
+  };
 }
 
 export const ColonySchema = SchemaFactory.createForClass(Colony);
